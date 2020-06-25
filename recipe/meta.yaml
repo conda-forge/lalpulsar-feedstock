@@ -2,7 +2,7 @@
 {% set version = "2.0.0" %}
 {% set sha256 = "fb9e1217eca7302baa5631c8510223bb6fcd7b0f755d5bed2a965130a4ff1a46" %}
 
-{% set lal_version = "6.21.0" %}
+{% set lal_version = "7.0.0" %}
 {% set swig_version = "3.0.9" %}
 
 package:
@@ -99,8 +99,6 @@ outputs:
         - lalpulsar.PulsarParametersWrapper
         - lalpulsar.simulateCW
       requires:
-        - mock  # [py<33]
-        - pathlib  # [py<34]
         - pytest >=4.0.0a0
       source_files:
         - test/python
