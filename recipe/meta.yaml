@@ -20,7 +20,7 @@ build:
     # run_exports parsing for fftw is broken, so we ignore it
     # manually, for now
     - fftw
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -76,6 +76,7 @@ outputs:
         - lal >={{ lal_version }}
         - {{ pin_subpackage('lalpulsar', exact=True) }}
         - numpy
+        - pytest >=4.0.0a0
         - python
         - python-lal >={{ lal_version }}
       run:
