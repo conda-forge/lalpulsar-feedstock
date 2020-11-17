@@ -2,7 +2,7 @@
 {% set version = "2.1.0" %}
 {% set sha256 = "eba373ece31caed5ed8e1a5509eb182859bb704b155a3880d57a8a10ffb1c9c0" %}
 
-{% set lal_version = "7.0.0" %}
+{% set lal_version = "7.1.0" %}
 {% set swig_version = "3.0.9" %}
 
 package:
