@@ -1,8 +1,8 @@
 {% set name = "lalpulsar" %}
-{% set version = "2.0.0" %}
-{% set sha256 = "fb9e1217eca7302baa5631c8510223bb6fcd7b0f755d5bed2a965130a4ff1a46" %}
+{% set version = "2.1.0" %}
+{% set sha256 = "eba373ece31caed5ed8e1a5509eb182859bb704b155a3880d57a8a10ffb1c9c0" %}
 
-{% set lal_version = "7.0.0" %}
+{% set lal_version = "7.1.0" %}
 {% set swig_version = "3.0.9" %}
 
 package:
@@ -20,7 +20,7 @@ build:
     # run_exports parsing for fftw is broken, so we ignore it
     # manually, for now
     - fftw
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
