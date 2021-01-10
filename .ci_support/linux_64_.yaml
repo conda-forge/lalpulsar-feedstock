@@ -1,7 +1,7 @@
 c_compiler:
 - gcc
 c_compiler_version:
-- '7'
+- '9'
 cdt_name:
 - cos6
 cfitsio:
@@ -17,6 +17,7 @@ fftw:
 gsl:
 - '2.6'
 numpy:
+- '1.18'
 - '1.16'
 - '1.16'
 - '1.16'
@@ -28,6 +29,7 @@ pin_run_as_build:
     min_pin: x.x
     max_pin: x.x
 python:
+- 3.6.* *_73_pypy
 - 3.6.* *_cpython
 - 3.7.* *_cpython
 - 3.8.* *_cpython
@@ -35,5 +37,7 @@ python:
 target_platform:
 - linux-64
 zip_keys:
+- - cdt_name
+  - docker_image
 - - python
   - numpy
