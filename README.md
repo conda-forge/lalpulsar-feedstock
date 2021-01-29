@@ -14,10 +14,6 @@ Development: https://git.ligo.org/lscsoft/lalsuite/
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
 
 The LSC Algorithm Pulsar Library for gravitational wave data analysis.
-This package contains the shared-object libraries needed to run
-applications that use the LAL Pulsar library.  If you want to install
-the Python bindings, please install the associated python-lalpulsar
-package.
 
 
 Current build status
@@ -65,6 +61,7 @@ Current release info
 | Name | Downloads | Version | Platforms |
 | --- | --- | --- | --- |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-lalpulsar-green.svg)](https://anaconda.org/conda-forge/lalpulsar) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/lalpulsar.svg)](https://anaconda.org/conda-forge/lalpulsar) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/lalpulsar.svg)](https://anaconda.org/conda-forge/lalpulsar) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/lalpulsar.svg)](https://anaconda.org/conda-forge/lalpulsar) |
+| [![Conda Recipe](https://img.shields.io/badge/recipe-liblalpulsar-green.svg)](https://anaconda.org/conda-forge/liblalpulsar) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/liblalpulsar.svg)](https://anaconda.org/conda-forge/liblalpulsar) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/liblalpulsar.svg)](https://anaconda.org/conda-forge/liblalpulsar) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/liblalpulsar.svg)](https://anaconda.org/conda-forge/liblalpulsar) |
 | [![Conda Recipe](https://img.shields.io/badge/recipe-python--lalpulsar-green.svg)](https://anaconda.org/conda-forge/python-lalpulsar) | [![Conda Downloads](https://img.shields.io/conda/dn/conda-forge/python-lalpulsar.svg)](https://anaconda.org/conda-forge/python-lalpulsar) | [![Conda Version](https://img.shields.io/conda/vn/conda-forge/python-lalpulsar.svg)](https://anaconda.org/conda-forge/python-lalpulsar) | [![Conda Platforms](https://img.shields.io/conda/pn/conda-forge/python-lalpulsar.svg)](https://anaconda.org/conda-forge/python-lalpulsar) |
 
 Installing lalpulsar
@@ -76,10 +73,10 @@ Installing `lalpulsar` from the `conda-forge` channel can be achieved by adding 
 conda config --add channels conda-forge
 ```
 
-Once the `conda-forge` channel has been enabled, `lalpulsar, python-lalpulsar` can be installed with:
+Once the `conda-forge` channel has been enabled, `lalpulsar, liblalpulsar, python-lalpulsar` can be installed with:
 
 ```
-conda install lalpulsar python-lalpulsar
+conda install lalpulsar liblalpulsar python-lalpulsar
 ```
 
 It is possible to list all of the versions of `lalpulsar` available on your platform with:
