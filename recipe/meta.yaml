@@ -1,12 +1,13 @@
 {% set name = "lalpulsar" %}
-{% set version = "2.1.0" %}
-{% set sha256 = "eba373ece31caed5ed8e1a5509eb182859bb704b155a3880d57a8a10ffb1c9c0" %}
+{% set version = "3.0.0" %}
+{% set sha256 = "36c28202f9962b7292fefd1f8c53880eb79a6900a329873e2c53a674e780d7c0" %}
 
-{% set lal_version = "7.1.0" %}
-{% set swig_version = "3.0.9" %}
+# dependencies
+{% set lal_version = "7.1.0a0" %}
+{% set swig_version = "3.0.10" %}
 
 package:
-  name: {{ name|lower }}
+  name: {{ name }}-split
   version: {{ version }}
 
 source:
@@ -16,16 +17,13 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  ignore_run_exports:
-    # run_exports parsing for fftw is broken, so we ignore it
-    # manually, for now
-    - fftw
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - help2man >=1.37
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - make
@@ -38,70 +36,82 @@ requirements:
     - lal >={{ lal_version }} fftw*
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
-  run:
-    - cfitsio
-    - fftw
-    - gsl
-    - lal >={{ lal_version }}
-    - llvm-openmp  # [osx]
-
-test:
-  requires:
-    - pkg-config  # [unix]
-  commands:
-    - test ${LALPULSAR_DATADIR} == "${PREFIX}/share/lalpulsar"  # [unix]
-    - lalpulsar_version --verbose
-    - test "$(pkg-config --modversion ${PKG_NAME})" == "${PKG_VERSION}"  # [unix]
 
 outputs:
-  - name: lalpulsar
+  - name: liblalpulsar
+    script: install-lib.sh
     build:
+      error_overdepending: true
+      error_overlinking: true
+      ignore_run_exports:
+        # run_exports parsing for fftw is broken, so we ignore it
+        # manually, for now
+        - fftw
       run_exports:
-        - {{ pin_subpackage("lalpulsar", max_pin="x.x") }}
+        - {{ pin_subpackage("liblalpulsar", max_pin="x") }}
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - libgomp  # [linux]
+        - llvm-openmp  # [osx]
+        - make
+        - swig >={{ swig_version }}
+      host:
+        - cfitsio
+        - fftw * nompi*
+        - gsl
+        - liblal >={{ lal_version }} fftw*
+        - libgomp  # [linux]
+        - llvm-openmp  # [osx]
+      run:
+        - cfitsio
+        - fftw
+        - gsl
+        - liblal >={{ lal_version }}
+    test:
+      requires:
+        - pkg-config  # [unix]
+      commands:
+        - test "$(pkg-config --modversion lalpulsar)" == "${PKG_VERSION}"  # [unix]
 
   - name: python-lalpulsar
     script: install-python.sh
     build:
+      error_overdepending: true
+      error_overlinking: true
       ignore_run_exports:
+        # ignore run_exports from python's recipe
         - python
     requirements:
       build:
         - {{ compiler('c') }}
         - make
-        - pkg-config >=0.18.0
+        - pkg-config
         - swig >={{ swig_version }}
       host:
-        - astropy
-        - gsl
-        - lal >={{ lal_version }}
-        - {{ pin_subpackage('lalpulsar', exact=True) }}
+        - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - numpy
-        - pytest >=4.0.0a0
         - python
-        - python-lal >={{ lal_version }}
       run:
         - astropy
-        - cfitsio  # [linux]
-        - fftw  # [linux]
-        - gsl
-        - lal >={{ lal_version }}
-        - {{ pin_subpackage('lalpulsar', exact=True) }}
+        - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
         - six
     test:
+      requires:
+        - pytest >=4.0.0a0
+      source_files:
+        - test/python
+        - lib/*.dat.gz
+      commands:
+        - LAL_TEST_PKGDATADIR="./lib" python -m pytest -rs -v test/python
       imports:
         - lalpulsar
         - lalpulsar.NstarTools
         - lalpulsar.PulsarParametersWrapper
         - lalpulsar.simulateCW
-      requires:
-        - pytest >=4.0.0a0
-      source_files:
-        - test/python
-      commands:
-        - pushd test/python; LAL_TEST_PKGDATADIR="${LALPULSAR_DATADIR}" python -m pytest -v; popd
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
@@ -114,6 +124,42 @@ outputs:
         The LSC Algorithm Pulsar Library for gravitational wave data analysis.
         This package contains the python bindings.
 
+  - name: lalpulsar
+    script: install-bin.sh
+    build:
+      ignore_run_exports:
+        - python
+    requirements:
+      build:
+        - {{ compiler('c') }}
+        - make
+      host:
+        - liblal >={{ lal_version }}
+        - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - python
+      run:
+        - liblal >={{ lal_version }}
+        - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - python
+        - {{ pin_subpackage('python-lalpulsar', exact=True) }}
+    test:
+      commands:
+        - lalpulsar_version --verbose
+    about:
+      home: https://wiki.ligo.org/Computing/LALSuite
+      doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
+      dev_url: https://git.ligo.org/lscsoft/lalsuite/
+      license: GPL-2.0-or-later
+      license_family: GPL
+      license_file: COPYING
+      summary: LSC Algorithm Pulsar Library
+      description: |
+        The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+        This package contains the shared-object libraries needed to run
+        applications that use the LAL Pulsar library.  If you want to install
+        the Python bindings, please install the associated python-lalpulsar
+        package.
+
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
   doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
@@ -124,12 +170,9 @@ about:
   summary: LSC Algorithm Pulsar Library
   description: |
     The LSC Algorithm Pulsar Library for gravitational wave data analysis.
-    This package contains the shared-object libraries needed to run
-    applications that use the LAL Pulsar library.  If you want to install
-    the Python bindings, please install the associated python-lalpulsar
-    package.
 
 extra:
+  feedstock-name: lalpulsar
   recipe-maintainers:
     - duncanmmacleod
     - skymoo
