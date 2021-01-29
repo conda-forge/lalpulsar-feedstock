@@ -96,7 +96,7 @@ outputs:
         - astropy
         - cfitsio  # [linux]
         - fftw  # [linux]
-        - gsl  # [linux]
+        - gsl
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - {{ pin_compatible('numpy') }}
