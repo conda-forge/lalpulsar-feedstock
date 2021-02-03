@@ -23,7 +23,6 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
-    - help2man >=1.37
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - make
@@ -88,6 +87,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
         - pkg-config
         - swig >={{ swig_version }}
@@ -137,6 +137,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
       host:
         - liblal >={{ lal_version }}
