@@ -17,13 +17,12 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - help2man >=1.37
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
     - make
@@ -68,6 +67,9 @@ outputs:
         - fftw
         - gsl
         - liblal >={{ lal_version }}
+      run_constrained:
+        - lalpulsar >=3.0.0
+        - python-lalpulsar >=3.0.0
     test:
       requires:
         - pkg-config  # [unix]
@@ -85,6 +87,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
         - pkg-config
         - swig >={{ swig_version }}
@@ -134,6 +137,7 @@ outputs:
     requirements:
       build:
         - {{ compiler('c') }}
+        - help2man >=1.37
         - make
       host:
         - liblal >={{ lal_version }}
