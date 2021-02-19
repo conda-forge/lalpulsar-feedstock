@@ -148,7 +148,7 @@ outputs:
 
         Note: this package only provides the importable Python libraries.
         All command-line interfaces, scripts, and executables are
-        part of the [`lalpulsar`](/conda-forge/lalpulsar) package.
+        part of the `lalpulsar` package.
 
   - name: lalpulsar
     script: install-bin.sh
