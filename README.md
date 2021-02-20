@@ -7,13 +7,15 @@ Package license: GPL-2.0-or-later
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalpulsar-feedstock/blob/master/LICENSE.txt)
 
-Summary: LSC Algorithm Pulsar Library
+Summary: LSC Algorithm Pulsar Library shared object libraries
 
-Development: https://git.ligo.org/lscsoft/lalsuite/
+Development: https://git.ligo.org/lscsoft/lalsuite.git
 
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
 
 The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+This package contains the shared-object libraries needed to run
+applications that use the LAL Pulsar library.
 
 
 Current build status
