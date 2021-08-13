@@ -4,6 +4,7 @@
 
 # dependencies
 {% set lal_version = "7.1.0" %}
+{% set lalframe_version = "1.5.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -33,7 +34,8 @@ requirements:
     - cfitsio
     - fftw * nompi*
     - gsl
-    - lal >={{ lal_version }} fftw*
+    - liblal >={{ lal_version }} fftw*
+    - liblalframe >={{ lalframe_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
 
@@ -61,6 +63,7 @@ outputs:
         - fftw * nompi*
         - gsl
         - liblal >={{ lal_version }} fftw*
+        - liblalframe >={{ lalframe_version }}
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
       run:
@@ -68,6 +71,7 @@ outputs:
         - fftw
         - gsl
         - liblal >={{ lal_version }}
+        - liblalframe >={{ lalframe_version }}
       run_constrained:
         - lalpulsar >=3.0.0
         - python-lalpulsar >=3.0.0
@@ -119,6 +123,7 @@ outputs:
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
+        - python-lalframe >={{ lalframe_version }}
         - six
     test:
       requires:
