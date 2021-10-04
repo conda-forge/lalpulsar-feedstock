@@ -7,7 +7,7 @@ cdt_name:
 cfitsio:
 - '3.470'
 channel_sources:
-- conda-forge,defaults
+- conda-forge
 channel_targets:
 - conda-forge main
 docker_image:
@@ -21,6 +21,8 @@ numpy:
 - '1.18'
 - '1.18'
 - '1.19'
+openssl:
+- 1.1.1
 pin_run_as_build:
   fftw:
     max_pin: x
