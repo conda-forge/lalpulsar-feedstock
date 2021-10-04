@@ -14,6 +14,9 @@ package:
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
+  patches:
+    # skip gsl_version check when cross compiling
+    - no-gsl_version-check.patch  # [build_platform != target_platform]
 
 build:
   error_overdepending: true
@@ -104,6 +107,7 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
+        - openssl
         # ignore run_exports from python's recipe
         - python
     requirements:
@@ -113,9 +117,14 @@ outputs:
         - make
         - pkg-config
         - swig >={{ swig_version }}
+        # extras for cross-compiling:
+        - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+        - numpy                               # [build_platform != target_platform]
+        - python                              # [build_platform != target_platform]
       host:
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - numpy
+        - openssl
         - python
       run:
         - astropy
@@ -159,15 +168,18 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
+        - openssl
         - python
     requirements:
       build:
         - {{ compiler('c') }}
         - help2man >=1.37
         - make
+        - sed
       host:
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - openssl
         - python
       run:
         - liblal >={{ lal_version }}
