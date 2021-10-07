@@ -19,7 +19,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 3
   skip: true  # [win]
 
 requirements:
@@ -35,7 +35,7 @@ requirements:
     - cfitsio
     - fftw * nompi*
     - gsl
-    - liblal >={{ lal_version }} fftw*
+    - liblal >={{ lal_version }}
     - liblalframe >={{ lalframe_version }}
     - liblalinference >={{ lalinference_version }}
     - liblalsimulation >={{ lalsimulation_version }}
@@ -92,7 +92,7 @@ outputs:
         - fftw * nompi*
         - gsl
         - {{ pin_subpackage('lalpulsar-data', exact=True) }}
-        - liblal >={{ lal_version }} fftw*
+        - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
         - liblalinference >={{ lalinference_version }}
         - liblalsimulation >={{ lalsimulation_version }}
