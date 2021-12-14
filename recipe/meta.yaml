@@ -4,7 +4,7 @@
 
 # dependencies
 {% set lal_version = "7.1.0" %}
-{% set lalframe_version = "1.5.0" %}
+{% set lalframe_version = "1.6.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
