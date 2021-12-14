@@ -1,6 +1,6 @@
 {% set name = "lalpulsar" %}
-{% set version = "3.1.0" %}
-{% set sha256 = "28a6d461b6477f5a5e3fc6872831f03c4c783d370db8fd8d7716fc74ddcf700a" %}
+{% set version = "3.1.1" %}
+{% set sha256 = "d0b89ee4508870dff9f0d086f50e3f3a7d218c41af96e6dbea582e90e94f2f21" %}
 
 # dependencies
 {% set lal_version = "7.1.0" %}
@@ -21,7 +21,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 3
+  number: 0
   skip: true  # [win]
 
 requirements:
