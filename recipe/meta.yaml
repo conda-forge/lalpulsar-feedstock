@@ -3,7 +3,7 @@
 {% set sha256 = "d0b89ee4508870dff9f0d086f50e3f3a7d218c41af96e6dbea582e90e94f2f21" %}
 
 # dependencies
-{% set lal_version = "7.1.0" %}
+{% set lal_version = "7.1.5" %}
 {% set lalframe_version = "1.6.0" %}
 {% set swig_version = "3.0.10" %}
 
