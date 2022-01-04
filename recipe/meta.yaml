@@ -1,10 +1,10 @@
 {% set name = "lalpulsar" %}
-{% set version = "3.1.0" %}
-{% set sha256 = "28a6d461b6477f5a5e3fc6872831f03c4c783d370db8fd8d7716fc74ddcf700a" %}
+{% set version = "3.1.1" %}
+{% set sha256 = "d0b89ee4508870dff9f0d086f50e3f3a7d218c41af96e6dbea582e90e94f2f21" %}
 
 # dependencies
-{% set lal_version = "7.1.0" %}
-{% set lalframe_version = "1.5.0" %}
+{% set lal_version = "7.1.5" %}
+{% set lalframe_version = "1.6.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -14,14 +14,11 @@ package:
 source:
   url: http://software.ligo.org/lscsoft/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: {{ sha256 }}
-  patches:
-    # skip gsl_version check when cross compiling
-    - no-gsl_version-check.patch  # [build_platform != target_platform]
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 3
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -107,7 +104,6 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        - openssl
         # ignore run_exports from python's recipe
         - python
     requirements:
@@ -124,7 +120,6 @@ outputs:
       host:
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - numpy
-        - openssl
         - python
       run:
         - astropy
@@ -168,7 +163,6 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
-        - openssl
         - python
     requirements:
       build:
@@ -179,7 +173,6 @@ outputs:
       host:
         - liblal >={{ lal_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
-        - openssl
         - python
       run:
         - liblal >={{ lal_version }}
