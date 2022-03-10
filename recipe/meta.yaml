@@ -1,6 +1,6 @@
 {% set name = "lalpulsar" %}
-{% set version = "3.1.2" %}
-{% set sha256 = "24baf3c42fd1601a3b18ab2dd057a1b946f403d053076086a9b8a98d5aee3ab4" %}
+{% set version = "4.0.0" %}
+{% set sha256 = "c6e6d07c49f6444dfb36a4679ec4a03b5fab2b705e689f7ef7eff4eb802d9120" %}
 
 # dependencies
 {% set lal_version = "7.1.5" %}
