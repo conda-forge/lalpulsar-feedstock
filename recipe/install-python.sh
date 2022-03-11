@@ -17,9 +17,9 @@ export GSL_LIBS="" #-L${PREFIX}/lib -lgsl"
 # configure only python bindings and pure-python extras
 ${SRC_DIR}/configure \
 	--disable-doxygen \
-	--disable-cfitsio \
 	--disable-gcc-flags \
 	--disable-swig-iface \
+	--enable-cfitsio \
 	--enable-help2man \
 	--enable-python \
 	--enable-swig-python \
