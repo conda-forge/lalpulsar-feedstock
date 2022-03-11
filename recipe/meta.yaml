@@ -43,6 +43,8 @@ outputs:
   - name: lalpulsar-data
     script: install-data.sh
     requirements:
+      build:
+        - make
       run_constrained:
         - liblalpulsar >=4.0.0
     test:
