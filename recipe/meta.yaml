@@ -49,7 +49,7 @@ outputs:
         - liblalpulsar >=4.0.0
     test:
       commands:
-        - test -f ${LALPULSAR_DATADIR}/sun00-40-DE405.dat.gz  # unix
+        - test -f ${LALPULSAR_DATADIR}/sun00-40-DE405.dat.gz  # [unix]
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
       doc_url: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
