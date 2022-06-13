@@ -18,7 +18,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -127,7 +127,7 @@ outputs:
       error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        # ignore run_exports from python's recipe
+        - numpy
         - python
     requirements:
       build:
