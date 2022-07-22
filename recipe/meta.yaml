@@ -159,7 +159,7 @@ outputs:
         - test/python
         - lib/*.dat.gz
       commands:
-        - LAL_TEST_PKGDATADIR="./lib" python -m pytest -ra -v test/python
+        - LAL_TEST_PKGDATADIR="./lib" python -m pytest -ra -v test/python  # [build_platform == target_platform]
       imports:
         - lalpulsar
         - lalpulsar.NstarTools
