@@ -32,17 +32,18 @@ requirements:
     - pkg-config >=0.18.0
     - swig >={{ swig_version }}
   host:
-    - bc
     - cfitsio
     - fftw * nompi*
     - gsl
-    - lalframe >={{ lalframe_version }}
     - liblal >={{ lal_version }} fftw*
     - liblalframe >={{ lalframe_version }}
     - liblalinference >={{ lalinference_version }}
     - liblalsimulation >={{ lalsimulation_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
+    # extras for `make check` (when not cross-compiling)
+    - bc  # [build_platform == target_platform]
+    - lalframe >={{ lalframe_version }}  # [build_platform == target_platform]
 
 outputs:
   - name: lalpulsar-data
