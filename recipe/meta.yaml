@@ -16,7 +16,10 @@ source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 5fbfb906ee3fd9915652e2d78ee18c9d1c5b317a4e711a40fd61594b90c44f5c
   patches:
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1956
     - 0001-test_synthesizeTransientStats.sh-ensure-seq-outputs-.patch
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1962
+    - 0002-test_create_solar_system_ephemeris_python.sh-set-j-a.patch
 
 build:
   error_overdepending: true
