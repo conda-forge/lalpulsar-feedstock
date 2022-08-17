@@ -2,7 +2,7 @@
 
 set -ex
 
-_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+_make="make -j ${CPU_COUNT}"
 
 cd _build
 

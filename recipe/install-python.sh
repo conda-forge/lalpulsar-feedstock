@@ -6,7 +6,7 @@
 
 set -e
 
-_make="make -j ${CPU_COUNT} V=1 VERBOSE=1"
+_make="make -j ${CPU_COUNT}"
 
 # build python in a sub-directory using a copy of the C build
 _builddir="_build${PY_VER}"
