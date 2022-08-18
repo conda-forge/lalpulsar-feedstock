@@ -236,6 +236,7 @@ outputs:
         - python-lal >={{ lal_version }}
         - python-lalframe >={{ lalframe_version }}
         - python-lalinference >={{ lalinference_version }}
+        - {{ pin_subpackage('python-lalpulsar', exact=True) }}
         - python-lalsimulation >={{ lalsimulation_version }}
         - scipy   # [build_platform == target_platform]
       run:
