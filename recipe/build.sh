@@ -30,6 +30,6 @@ ${SRC_DIR}/configure \
 ${_make}
 
 # test
-if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
+if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
 	${_make} check
 fi
