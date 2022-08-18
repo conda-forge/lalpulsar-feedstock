@@ -31,5 +31,5 @@ ${_make}
 
 # test
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
-	${_make} check
+	${_make} check V=1 VERBOSE=1
 fi

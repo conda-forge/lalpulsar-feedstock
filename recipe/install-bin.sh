@@ -10,7 +10,7 @@ cd ${_pybuilddir}
 
 # test binaries
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" || "${CROSSCOMPILING_EMULATOR}" != "" ]]; then
-	${_make} -C bin check
+	${_make} -C bin check V=1 VERBOSE=1
 fi
 
 # install binaries
