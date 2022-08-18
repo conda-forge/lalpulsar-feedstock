@@ -1,10 +1,11 @@
 {% set name = "lalpulsar" %}
-{% set version = "4.0.0" %}
-{% set sha256 = "c6e6d07c49f6444dfb36a4679ec4a03b5fab2b705e689f7ef7eff4eb802d9120" %}
+{% set version = "5.0.0" %}
 
 # dependencies
 {% set lal_version = "7.1.5" %}
 {% set lalframe_version = "2.0.0" %}
+{% set lalinference_version = "4.0.0" %}
+{% set lalsimulation_version = "3.1.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -13,12 +14,19 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: {{ sha256 }}
+  sha256: 5fbfb906ee3fd9915652e2d78ee18c9d1c5b317a4e711a40fd61594b90c44f5c
+  patches:
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1956
+    - 0001-test_synthesizeTransientStats.sh-ensure-seq-outputs-.patch
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1962
+    - 0002-test_create_solar_system_ephemeris_python.sh-set-j-a.patch
+    # hack test for non x86_64, see https://git.ligo.org/lscsoft/lalsuite/-/issues/584
+    - testWeave_interpolating-nocompare.patch  # [linux and not x86_64]
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -36,8 +44,13 @@ requirements:
     - gsl
     - liblal >={{ lal_version }} fftw*
     - liblalframe >={{ lalframe_version }}
+    - liblalinference >={{ lalinference_version }}
+    - liblalsimulation >={{ lalsimulation_version }}
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
+    # extras for `make check` (when not cross-compiling)
+    - bc  # [build_platform == target_platform]
+    - lalframe >={{ lalframe_version }}  # [build_platform == target_platform]
 
 outputs:
   - name: lalpulsar-data
@@ -88,6 +101,8 @@ outputs:
         - {{ pin_subpackage('lalpulsar-data', exact=True) }}
         - liblal >={{ lal_version }} fftw*
         - liblalframe >={{ lalframe_version }}
+        - liblalinference >={{ lalinference_version }}
+        - liblalsimulation >={{ lalsimulation_version }}
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
       run:
@@ -97,6 +112,8 @@ outputs:
         - {{ pin_subpackage('lalpulsar-data', exact=True) }}
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
+        - liblalinference >={{ lalinference_version }}
+        - liblalsimulation >={{ lalsimulation_version }}
       run_constrained:
         - lalpulsar >=3.0.0
         - python-lalpulsar >=3.0.0
@@ -151,6 +168,8 @@ outputs:
         - python
         - python-lal >={{ lal_version }}
         - python-lalframe >={{ lalframe_version }}
+        - python-lalinference >={{ lalinference_version }}
+        - python-lalsimulation >={{ lalsimulation_version }}
         - six
     test:
       requires:
@@ -164,6 +183,9 @@ outputs:
         - lalpulsar
         - lalpulsar.NstarTools
         - lalpulsar.PulsarParametersWrapper
+        - lalpulsar.knope_utils
+        - lalpulsar.pulsarhtmlutils
+        - lalpulsar.pulsarpputils
         - lalpulsar.simulateCW
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
@@ -186,6 +208,7 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
+        - numpy
         - python
     requirements:
       build:
@@ -194,16 +217,63 @@ outputs:
         - make
         - sed
       host:
+        - astropy  # [build_platform == target_platform]
+        - bc
+        - cfitsio
+        - gsl
+        - h5py  # [build_platform == target_platform]
+        - jplephem  # [build_platform == target_platform]
+        - lalframe >={{ lalframe_version }}
+        - lalinference >={{ lalinference_version }}
         - liblal >={{ lal_version }}
+        - liblalframe >={{ lalframe_version }}
+        - liblalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - liblalsimulation >={{ lalsimulation_version }}
+        - numpy
+        - pytest  # [build_platform == target_platform]
         - python
+        - python-lal >={{ lal_version }}
+        - python-lalframe >={{ lalframe_version }}
+        - python-lalinference >={{ lalinference_version }}
+        - {{ pin_subpackage('python-lalpulsar', exact=True) }}
+        - python-lalsimulation >={{ lalsimulation_version }}
+        - scipy   # [build_platform == target_platform]
       run:
+        - astropy
+        - cfitsio
+        - gsl
+        - jplephem
         - liblal >={{ lal_version }}
+        - liblalframe >={{ lalframe_version }}
+        - liblalsimulation >={{ lalsimulation_version }}
+        - liblalinference >={{ lalinference_version }}
+        - lalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - {{ pin_compatible('numpy') }}
         - python
+        - python-lal >={{ lal_version }}
+        - python-lalframe >={{ lalframe_version }}
+        - python-lalinference >={{ lalinference_version }}
+        - python-lalsimulation >={{ lalsimulation_version }}
         - {{ pin_subpackage('python-lalpulsar', exact=True) }}
     test:
       commands:
+        - lalpulsar_create_solar_system_ephemeris --help
+        - lalpulsar_create_solar_system_ephemeris_python --help
+        - lalpulsar_create_time_correction_ephemeris --help
+        - lalpulsar_fits_header_getval --help
+        - lalpulsar_fits_header_list --help
+        - lalpulsar_fits_overview --help
+        - lalpulsar_fits_table_list --help
+        - lalpulsar_heterodyne --help
+        - lalpulsar_knope --help
+        - lalpulsar_knope_collate_results --help
+        #- lalpulsar_knope_result_page --help  <- needs scotchcorner
+        - lalpulsar_frequency_evolution --help
+        - lalpulsar_parameter_estimation_nested --help
+        - lalpulsar_splitSFTs --help
+        - test "$(lalpulsar_ssbtodetector --gps 1000000000 --ra 0 --dec 0 --telescope JBO)" == "999999506.306100250"
         - lalpulsar_version --verbose
     about:
       home: https://wiki.ligo.org/Computing/LALSuite
