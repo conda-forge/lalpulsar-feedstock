@@ -1,5 +1,5 @@
 {% set name = "lalpulsar" %}
-{% set version = "5.0.0" %}
+{% set version = "5.0.2" %}
 
 # dependencies
 {% set lal_version = "7.1.5" %}
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 5fbfb906ee3fd9915652e2d78ee18c9d1c5b317a4e711a40fd61594b90c44f5c
+  sha256: 9c33982dd7bc20b9b0625b0e7369e1d5f0ccf2af4892c2af9149be33a4065488
   patches:
     # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/1956
     - 0001-test_synthesizeTransientStats.sh-ensure-seq-outputs-.patch
