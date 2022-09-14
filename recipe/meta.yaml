@@ -2,9 +2,9 @@
 {% set version = "5.0.2" %}
 
 # dependencies
-{% set lal_version = "7.1.5" %}
+{% set lal_version = "7.2.2" %}
 {% set lalframe_version = "2.0.0" %}
-{% set lalinference_version = "4.0.0" %}
+{% set lalinference_version = "4.1.0" %}
 {% set lalsimulation_version = "3.1.0" %}
 {% set swig_version = "3.0.10" %}
 
@@ -19,7 +19,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
