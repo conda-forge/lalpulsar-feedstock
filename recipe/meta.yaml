@@ -2,7 +2,7 @@
 {% set version = "5.1.1" %}
 
 # dependencies
-{% set lal_version = "7.2.2" %}
+{% set lal_version = "7.2.4" %}
 {% set lalframe_version = "2.0.0" %}
 {% set lalinference_version = "4.1.0" %}
 {% set lalsimulation_version = "3.1.0" %}
