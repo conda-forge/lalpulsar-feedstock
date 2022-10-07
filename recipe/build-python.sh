@@ -24,6 +24,7 @@ ${SRC_DIR}/configure \
 	--enable-cfitsio \
 	--enable-help2man \
 	--enable-python \
+	--enable-sistr \
 	--enable-swig-python \
 	--prefix=$PREFIX \
 ;

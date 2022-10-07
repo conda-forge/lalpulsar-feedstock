@@ -22,6 +22,7 @@ ${SRC_DIR}/configure \
 	--enable-cfitsio \
 	--enable-help2man \
 	--enable-openmp \
+	--enable-sistr \
 	--enable-swig-iface \
 	--prefix="${PREFIX}" \
 ;

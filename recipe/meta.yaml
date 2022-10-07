@@ -19,7 +19,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -40,6 +40,7 @@ requirements:
     - liblalinference >={{ lalinference_version }}
     - liblalsimulation >={{ lalsimulation_version }}
     - libgomp  # [linux]
+    - libsistr  # [unix]
     - llvm-openmp  # [osx]
     # extras for `make check` (when not cross-compiling)
     - bc  # [build_platform == target_platform]
@@ -223,6 +224,7 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - liblalsimulation >={{ lalsimulation_version }}
+        - libsistr  # [unix]
         - numpy
         - pytest  # [build_platform == target_platform]
         - python
@@ -243,6 +245,7 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - lalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - libsistr  # [unix]
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
@@ -260,6 +263,7 @@ outputs:
         - lalpulsar_fits_overview --help
         - lalpulsar_fits_table_list --help
         - lalpulsar_heterodyne --help
+        - lalpulsar_hwinject -h  # [unix]
         - lalpulsar_knope --help
         - lalpulsar_knope_collate_results --help
         #- lalpulsar_knope_result_page --help  <- needs scotchcorner
