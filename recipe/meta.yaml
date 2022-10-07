@@ -153,6 +153,8 @@ outputs:
         - python                              # [build_platform != target_platform]
       host:
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        # for bin/lalpulsar-hwinject
+        - libsistr  # [unix]
         - numpy
         - python
       run:
