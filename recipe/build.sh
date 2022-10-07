@@ -12,6 +12,13 @@ cd _build
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 export CFITSIO_LIBS="-L${PREFIX}/lib -lcfitsio"
 
+# libSIStr is only available for Linux
+if [[ "$(uname)" = "Linux" ]]; then
+	ENABLE_SISTR="--enable-sistr"
+else
+	ENABLE_SISTR=""
+fi
+
 # configure
 ${SRC_DIR}/configure \
 	--disable-doxygen \
@@ -22,9 +29,9 @@ ${SRC_DIR}/configure \
 	--enable-cfitsio \
 	--enable-help2man \
 	--enable-openmp \
-	--enable-sistr \
 	--enable-swig-iface \
 	--prefix="${PREFIX}" \
+	${ENABLE_SISTR} \
 ;
 
 # build

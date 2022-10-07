@@ -40,7 +40,7 @@ requirements:
     - liblalinference >={{ lalinference_version }}
     - liblalsimulation >={{ lalsimulation_version }}
     - libgomp  # [linux]
-    - libsistr  # [unix]
+    - libsistr  # [linux]
     - llvm-openmp  # [osx]
     # extras for `make check` (when not cross-compiling)
     - bc  # [build_platform == target_platform]
@@ -154,7 +154,7 @@ outputs:
       host:
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         # for bin/lalpulsar-hwinject
-        - libsistr  # [unix]
+        - libsistr  # [linux]
         - numpy
         - python
       run:
@@ -226,7 +226,7 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - liblalsimulation >={{ lalsimulation_version }}
-        - libsistr  # [unix]
+        - libsistr  # [linux]
         - numpy
         - pytest  # [build_platform == target_platform]
         - python
@@ -247,7 +247,7 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - lalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
-        - libsistr  # [unix]
+        - libsistr  # [linux]
         - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}

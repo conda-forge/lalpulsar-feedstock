@@ -16,6 +16,13 @@ cd ${_builddir}
 # only link libraries we actually use
 export GSL_LIBS="-L${PREFIX}/lib -lgsl"
 
+# libSIStr is only available for Linux
+if [[ "$(uname)" = "Linux" ]]; then
+	ENABLE_SISTR="--enable-sistr"
+else
+	ENABLE_SISTR=""
+fi
+
 # configure only python bindings and pure-python extras
 ${SRC_DIR}/configure \
 	--disable-doxygen \
@@ -24,9 +31,9 @@ ${SRC_DIR}/configure \
 	--enable-cfitsio \
 	--enable-help2man \
 	--enable-python \
-	--enable-sistr \
 	--enable-swig-python \
 	--prefix=$PREFIX \
+	${ENABLE_SISTR} \
 ;
 
 # patch out dependency_libs from libtool archive to prevent overlinking
