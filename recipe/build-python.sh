@@ -6,26 +6,20 @@
 
 set -e
 
-_make="make -j ${CPU_COUNT}"
+# load common options
+. ${RECIPE_DIR}/common.sh
 
 # build python in a sub-directory using a copy of the C build
 _builddir="_build${PY_VER}"
 cp -r _build ${_builddir}
 cd ${_builddir}
 
-# only link libraries we actually use
-export GSL_LIBS="-L${PREFIX}/lib -lgsl"
-
 # configure only python bindings and pure-python extras
 ${SRC_DIR}/configure \
-	--disable-doxygen \
-	--disable-gcc-flags \
-	--disable-swig-iface \
-	--enable-cfitsio \
-	--enable-help2man \
-	--enable-python \
-	--enable-swig-python \
-	--prefix=$PREFIX \
+  ${CONFIGURE_ARGS} \
+  --disable-swig-iface \
+  --enable-python \
+  --enable-swig-python \
 ;
 
 # patch out dependency_libs from libtool archive to prevent overlinking
