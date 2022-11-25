@@ -278,10 +278,6 @@ outputs:
       summary: LSC Algorithm Pulsar Library
       description: |
         The LSC Algorithm Pulsar Library for gravitational wave data analysis.
-        This package contains the shared-object libraries needed to run
-        applications that use the LAL Pulsar library.  If you want to install
-        the Python bindings, please install the associated python-lalpulsar
-        package.
 
 about:
   home: https://wiki.ligo.org/Computing/LALSuite
