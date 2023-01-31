@@ -2,7 +2,8 @@
 
 set -ex
 
-_make="make -j ${CPU_COUNT}"
+# load common options
+. ${RECIPE_DIR}/common.sh
 
 # install from python build directory
 _pybuilddir="_build${PY_VER}"
@@ -10,7 +11,7 @@ cd ${_pybuilddir}
 
 # test binaries
 if [[ "${CONDA_BUILD_CROSS_COMPILATION:-}" != "1" ]]; then
-	${_make} -C bin check V=1 VERBOSE=1
+  ${_make} -C bin check
 fi
 
 # install binaries
