@@ -1,11 +1,29 @@
+About lalpulsar-feedstock
+=========================
+
+Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalpulsar-feedstock/blob/main/LICENSE.txt)
+
 About lalpulsar
-===============
+---------------
 
 Home: https://wiki.ligo.org/Computing/LALSuite
 
 Package license: GPL-2.0-or-later
 
-Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalpulsar-feedstock/blob/main/LICENSE.txt)
+Summary: LSC Algorithm Pulsar Library
+
+Development: https://git.ligo.org/lscsoft/lalsuite/
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
+
+The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+
+About lalpulsar-data
+--------------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
 
 Summary: LSC Algorithm Pulsar Library data files
 
@@ -16,6 +34,44 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
 The LSC Algorithm Pulsar Library for gravitational wave data analysis.
 This package contains the data files needed to run various applications
 and routines that use the LAL Pulsar library.
+
+About liblalpulsar
+------------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
+
+Summary: LSC Algorithm Pulsar Library shared object libraries
+
+Development: https://git.ligo.org/lscsoft/lalsuite.git
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
+
+The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+This package contains the shared-object libraries needed to run
+applications that use the LAL Pulsar library.
+
+About python-lalpulsar
+----------------------
+
+Home: https://wiki.ligo.org/Computing/LALSuite
+
+Package license: GPL-2.0-or-later
+
+Summary: LSC Algorithm Pulsar Library Python libraries
+
+Development: https://git.ligo.org/lscsoft/lalsuite.git
+
+Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
+
+The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+This package contains the Python bindings of the LALPulsar C libraries
+and additional Python modules.
+
+Note: this package only provides the importable Python libraries.
+All command-line interfaces, scripts, and executables are
+part of the `lalpulsar` package.
 
 
 Current build status
