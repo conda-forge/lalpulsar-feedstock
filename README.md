@@ -3,6 +3,7 @@ About lalpulsar-feedstock
 
 Feedstock license: [BSD-3-Clause](https://github.com/conda-forge/lalpulsar-feedstock/blob/main/LICENSE.txt)
 
+
 About lalpulsar
 ---------------
 
@@ -17,6 +18,7 @@ Development: https://git.ligo.org/lscsoft/lalsuite/
 Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
 
 The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+
 
 About lalpulsar-data
 --------------------
@@ -35,6 +37,7 @@ The LSC Algorithm Pulsar Library for gravitational wave data analysis.
 This package contains the data files needed to run various applications
 and routines that use the LAL Pulsar library.
 
+
 About liblalpulsar
 ------------------
 
@@ -51,6 +54,7 @@ Documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
 The LSC Algorithm Pulsar Library for gravitational wave data analysis.
 This package contains the shared-object libraries needed to run
 applications that use the LAL Pulsar library.
+
 
 About python-lalpulsar
 ----------------------
