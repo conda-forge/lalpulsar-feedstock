@@ -1,11 +1,11 @@
 {% set name = "lalpulsar" %}
-{% set version = "6.0.4" %}
+{% set version = "6.0.5" %}
 
 # dependencies
-{% set lal_version = "7.3.0" %}
+{% set lal_version = "7.4.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinference_version = "4.1.0" %}
-{% set lalsimulation_version = "5.1.0" %}
+{% set lalsimulation_version = "5.3.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -14,12 +14,12 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: f367c58909f5e6b0cb152db29d197f1701c2ca29374de1ae2da6bdfc1ab7bdc7
+  sha256: 7bf969f3a4a7c69e70471d02db1bf95a0648501028ff8b63b42b3c547fc5670d
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 3
+  number: 0
   skip: true  # [win]
 
 requirements:
@@ -41,7 +41,6 @@ requirements:
     - liblalinference >={{ lalinference_version }}
     - liblalsimulation >={{ lalsimulation_version }}
     - libgomp  # [linux]
-    - llvm-openmp  # [osx]
     # extras for `make check` (when not cross-compiling)
     - bc  # [build_platform == target_platform]
     - lalframe >={{ lalframe_version }}  # [build_platform == target_platform]
@@ -98,7 +97,6 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - liblalsimulation >={{ lalsimulation_version }}
         - libgomp  # [linux]
-        - llvm-openmp  # [osx]
       run:
         - cfitsio
         - fftw
