@@ -41,7 +41,6 @@ requirements:
     - liblalinference >={{ lalinference_version }}
     - liblalsimulation >={{ lalsimulation_version }}
     - libgomp  # [linux]
-    - llvm-openmp  # [osx]
     # extras for `make check` (when not cross-compiling)
     - bc  # [build_platform == target_platform]
     - lalframe >={{ lalframe_version }}  # [build_platform == target_platform]
@@ -98,7 +97,6 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - liblalsimulation >={{ lalsimulation_version }}
         - libgomp  # [linux]
-        - llvm-openmp  # [osx]
       run:
         - cfitsio
         - fftw
