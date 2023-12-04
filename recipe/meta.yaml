@@ -19,7 +19,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -138,6 +138,7 @@ outputs:
       ignore_run_exports:
         - numpy
         - python
+      skip: true  # [win or py<39]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -202,6 +203,7 @@ outputs:
       ignore_run_exports:
         - numpy
         - python
+      skip: true  # [win or py<39]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -233,8 +235,6 @@ outputs:
         - scipy   # [build_platform == target_platform]
       run:
         - astropy
-        - cfitsio
-        - gsl
         - jplephem
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
