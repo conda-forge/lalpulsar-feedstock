@@ -235,8 +235,6 @@ outputs:
         - scipy   # [build_platform == target_platform]
       run:
         - astropy
-        - cfitsio
-        - gsl
         - jplephem
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
