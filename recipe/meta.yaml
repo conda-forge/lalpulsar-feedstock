@@ -1,5 +1,5 @@
 {% set name = "lalpulsar" %}
-{% set version = "6.0.6" %}
+{% set version = "6.1.0" %}
 
 # dependencies
 {% set lal_version = "7.4.0" %}
@@ -14,12 +14,12 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 1907851399c9adc20fb7dab71dd1cdda4093e75048c92ac407fb8f0a79af86ab
+  sha256: 5a30841d77899e09fac3700fdd4677bcc5aa75a814fdbbaa1737018289cd7e7e
 
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
