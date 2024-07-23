@@ -19,7 +19,7 @@ source:
 build:
   error_overdepending: true
   error_overlinking: true
-  number: 2
+  number: 3
   skip: true  # [win]
 
 requirements:
@@ -160,7 +160,6 @@ outputs:
       run:
         - astropy
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
-        - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
         - python-lalframe >={{ lalframe_version }}
@@ -246,7 +245,6 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - lalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
-        - {{ pin_compatible('numpy') }}
         - python
         - python-lal >={{ lal_version }}
         - python-lalframe >={{ lalframe_version }}
