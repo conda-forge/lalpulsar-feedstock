@@ -15,6 +15,9 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 5a30841d77899e09fac3700fdd4677bcc5aa75a814fdbbaa1737018289cd7e7e
+  patches:
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2331
+    - scipy-cumulative_trapezoid.patch
 
 build:
   error_overlinking: true
