@@ -17,7 +17,6 @@ source:
   sha256: 5a30841d77899e09fac3700fdd4677bcc5aa75a814fdbbaa1737018289cd7e7e
 
 build:
-  error_overdepending: true
   error_overlinking: true
   number: 3
   skip: true  # [win]
@@ -73,7 +72,6 @@ outputs:
   - name: liblalpulsar
     script: install-lib.sh
     build:
-      error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
         # run_exports parsing for fftw is broken, so we ignore it
@@ -135,10 +133,8 @@ outputs:
   - name: python-lalpulsar
     script: build-python.sh
     build:
-      error_overdepending: true
       error_overlinking: true
       ignore_run_exports:
-        - numpy
         - python
       skip: true  # [win or py<39]
     requirements:
@@ -160,6 +156,7 @@ outputs:
       run:
         - astropy
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - numpy
         - python
         - python-lal >={{ lal_version }}
         - python-lalframe >={{ lalframe_version }}
@@ -203,7 +200,6 @@ outputs:
     script: install-bin.sh
     build:
       ignore_run_exports:
-        - numpy
         - python
       skip: true  # [win or py<39]
     requirements:
@@ -245,6 +241,7 @@ outputs:
         - liblalinference >={{ lalinference_version }}
         - lalinference >={{ lalinference_version }}
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
+        - numpy
         - python
         - python-lal >={{ lal_version }}
         - python-lalframe >={{ lalframe_version }}
