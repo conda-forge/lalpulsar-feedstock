@@ -1,5 +1,5 @@
 {% set name = "lalpulsar" %}
-{% set version = "6.1.0" %}
+{% set version = "7.0.0" %}
 
 # dependencies
 {% set lal_version = "7.5.0" %}
@@ -14,14 +14,14 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 5a30841d77899e09fac3700fdd4677bcc5aa75a814fdbbaa1737018289cd7e7e
+  sha256: 8ccec2a6160faf47b142c09fe873c0f7a711a1b24eb47d9c821704e5e2874f3b
   patches:
     # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2331
     - scipy-cumulative_trapezoid.patch
 
 build:
   error_overlinking: true
-  number: 3
+  number: 0
   skip: true  # [win]
 
 requirements:
