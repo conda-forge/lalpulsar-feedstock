@@ -2,10 +2,10 @@
 {% set version = "7.0.0" %}
 
 # dependencies
-{% set lal_version = "7.5.0" %}
+{% set lal_version = "7.6.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinference_version = "4.1.0" %}
-{% set lalsimulation_version = "5.4.0" %}
+{% set lalsimulation_version = "6.0.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -15,9 +15,6 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 8ccec2a6160faf47b142c09fe873c0f7a711a1b24eb47d9c821704e5e2874f3b
-  patches:
-    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2331
-    - scipy-cumulative_trapezoid.patch
 
 build:
   error_overlinking: true
@@ -137,8 +134,6 @@ outputs:
     script: build-python.sh
     build:
       error_overlinking: true
-      ignore_run_exports:
-        - python
       skip: true  # [win or py<39]
     requirements:
       build:
@@ -202,8 +197,6 @@ outputs:
   - name: lalpulsar
     script: install-bin.sh
     build:
-      ignore_run_exports:
-        - python
       skip: true  # [win or py<39]
     requirements:
       build:
