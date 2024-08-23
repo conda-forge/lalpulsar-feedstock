@@ -134,7 +134,9 @@ outputs:
     script: build-python.sh
     build:
       error_overlinking: true
-      skip: true  # [win or py<39]
+      # no python-lalburst on Python 3.9
+      # (astropy (for python-lalsimulation) is incompatible with numpy 2)
+      skip: true  # [win or py<310]
     requirements:
       build:
         - {{ compiler('c') }}
@@ -197,7 +199,9 @@ outputs:
   - name: lalpulsar
     script: install-bin.sh
     build:
-      skip: true  # [win or py<39]
+      # no python-lalburst on Python 3.9
+      # (astropy (for python-lalsimulation) is incompatible with numpy 2)
+      skip: true  # [win or py<310]
     requirements:
       build:
         - {{ compiler('c') }}
