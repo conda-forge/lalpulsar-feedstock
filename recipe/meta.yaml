@@ -1,12 +1,12 @@
 {% set name = "lalpulsar" %}
-{% set version = "7.0.0" %}
+{% set version = "7.0.1" %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinference_version = "4.1.0" %}
 {% set lalsimulation_version = "6.0.0" %}
-{% set swig_version = "3.0.10" %}
+{% set swig_version = "4.2.1" %}
 
 package:
   name: {{ name }}-split
@@ -14,7 +14,7 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 8ccec2a6160faf47b142c09fe873c0f7a711a1b24eb47d9c821704e5e2874f3b
+  sha256: cb316bfb485df22f96d2eb92f1178b65c2880e8765f281aa3e01454a3b1f7647
 
 build:
   error_overlinking: true
@@ -31,7 +31,7 @@ requirements:
     - make
     - pkg-config >=0.18.0
     - python >=3.5
-    - swig >={{ swig_version }}
+    - swig {{ swig_version }}
   host:
     - cfitsio
     - fftw * nompi*
@@ -86,7 +86,7 @@ outputs:
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
         - make
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}
       host:
         - cfitsio
         - fftw * nompi*
@@ -144,7 +144,7 @@ outputs:
         - help2man >=1.37  # [py!=39 and build_platform == target_platform]
         - make
         - pkg-config
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}
         # extras for cross-compiling:
         - cross-python_{{ target_platform }}  # [build_platform != target_platform]
         - numpy                               # [build_platform != target_platform]
@@ -211,6 +211,7 @@ outputs:
         - sed
       host:
         - cfitsio
+        - fftw
         - gsl
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
@@ -235,6 +236,7 @@ outputs:
         - scipy   # [py!=39 and build_platform == target_platform]
       run:
         - astropy
+        - fftw
         - jplephem
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
