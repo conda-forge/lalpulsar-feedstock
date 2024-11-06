@@ -211,6 +211,7 @@ outputs:
         - sed
       host:
         - cfitsio
+        - fftw
         - gsl
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
@@ -235,6 +236,7 @@ outputs:
         - scipy   # [py!=39 and build_platform == target_platform]
       run:
         - astropy
+        - fftw
         - jplephem
         - liblal >={{ lal_version }}
         - liblalframe >={{ lalframe_version }}
