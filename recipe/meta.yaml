@@ -18,7 +18,7 @@ source:
 
 build:
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -154,7 +154,7 @@ outputs:
         - numpy
         - python
       run:
-        - astropy
+        - astropy-base
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - numpy
         - python
@@ -221,7 +221,7 @@ outputs:
         - numpy
         - python
         # requirements for make check / manual generation
-        - astropy  # [py!=39 and build_platform == target_platform]
+        - astropy-base  # [py!=39 and build_platform == target_platform]
         - bc  # [py!=39 and build_platform == target_platform]
         - h5py  # [py!=39 and build_platform == target_platform]
         - jplephem  # [py!=39 and build_platform == target_platform]
@@ -235,7 +235,7 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}  # [py!=39 and build_platform == target_platform]
         - scipy   # [py!=39 and build_platform == target_platform]
       run:
-        - astropy
+        - astropy-base
         - fftw
         - jplephem
         - liblal >={{ lal_version }}
