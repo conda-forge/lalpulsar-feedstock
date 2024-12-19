@@ -6,7 +6,7 @@
 {% set lalframe_version = "3.0.0" %}
 {% set lalinference_version = "4.1.0" %}
 {% set lalsimulation_version = "6.0.0" %}
-{% set swig_version = "4.2.1" %}
+{% set swig_version = "3.0.10" %}
 
 package:
   name: {{ name }}-split
@@ -18,7 +18,7 @@ source:
 
 build:
   error_overlinking: true
-  number: 0
+  number: 1
   skip: true  # [win]
 
 requirements:
@@ -31,7 +31,7 @@ requirements:
     - make
     - pkg-config >=0.18.0
     - python >=3.5
-    - swig {{ swig_version }}
+    - swig >={{ swig_version }}
   host:
     - cfitsio
     - fftw * nompi*
@@ -86,7 +86,7 @@ outputs:
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
         - make
-        - swig {{ swig_version }}
+        - swig >={{ swig_version }}
       host:
         - cfitsio
         - fftw * nompi*
@@ -144,7 +144,7 @@ outputs:
         - help2man >=1.37  # [py!=39 and build_platform == target_platform]
         - make
         - pkg-config
-        - swig {{ swig_version }}
+        - swig >={{ swig_version }}
         # extras for cross-compiling:
         - cross-python_{{ target_platform }}  # [build_platform != target_platform]
         - numpy                               # [build_platform != target_platform]
@@ -154,7 +154,7 @@ outputs:
         - numpy
         - python
       run:
-        - astropy
+        - astropy-base
         - {{ pin_subpackage('liblalpulsar', exact=True) }}
         - numpy
         - python
@@ -221,7 +221,7 @@ outputs:
         - numpy
         - python
         # requirements for make check / manual generation
-        - astropy  # [py!=39 and build_platform == target_platform]
+        - astropy-base  # [py!=39 and build_platform == target_platform]
         - bc  # [py!=39 and build_platform == target_platform]
         - h5py  # [py!=39 and build_platform == target_platform]
         - jplephem  # [py!=39 and build_platform == target_platform]
@@ -235,7 +235,7 @@ outputs:
         - python-lalsimulation >={{ lalsimulation_version }}  # [py!=39 and build_platform == target_platform]
         - scipy   # [py!=39 and build_platform == target_platform]
       run:
-        - astropy
+        - astropy-base
         - fftw
         - jplephem
         - liblal >={{ lal_version }}
