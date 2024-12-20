@@ -1,11 +1,11 @@
 {% set name = "lalpulsar" %}
-{% set version = "7.0.1" %}
+{% set version = "7.1.0" %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
 {% set lalframe_version = "3.0.0" %}
 {% set lalinference_version = "4.1.0" %}
-{% set lalsimulation_version = "6.0.0" %}
+{% set lalsimulation_version = "6.1.0" %}
 {% set swig_version = "3.0.10" %}
 
 package:
@@ -14,11 +14,11 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: cb316bfb485df22f96d2eb92f1178b65c2880e8765f281aa3e01454a3b1f7647
+  sha256: 14a6799d54e876953b2ad346268fa20add836eef5a96175982fa0e95d055fd19
 
 build:
   error_overlinking: true
-  number: 1
+  number: 0
   skip: true  # [win]
 
 requirements:
