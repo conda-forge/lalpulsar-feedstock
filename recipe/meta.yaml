@@ -6,7 +6,10 @@
 {% set lalframe_version = "3.0.0" %}
 {% set lalinference_version = "4.1.0" %}
 {% set lalsimulation_version = "6.1.0" %}
-{% set swig_version = "3.0.10" %}
+
+# LAL requires downstream packages to be built with the same version of SWIG,
+# so we need to pin it here
+{% set swig_version = "4.4.1" %}
 
 package:
   name: {{ name }}-split
@@ -18,7 +21,7 @@ source:
 
 build:
   error_overlinking: true
-  number: 1
+  number: 2
   skip: true  # [win]
 
 requirements:
@@ -31,7 +34,7 @@ requirements:
     - make
     - pkg-config >=0.18.0
     - python >=3.5
-    - swig >={{ swig_version }}
+    - swig {{ swig_version }}.*
   host:
     - cfitsio
     - fftw * nompi*
@@ -86,7 +89,7 @@ outputs:
         - libgomp  # [linux]
         - llvm-openmp  # [osx]
         - make
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
       host:
         - cfitsio
         - fftw * nompi*
@@ -144,7 +147,7 @@ outputs:
         - help2man >=1.37  # [py!=39 and build_platform == target_platform]
         - make
         - pkg-config
-        - swig >={{ swig_version }}
+        - swig {{ swig_version }}.*
         # extras for cross-compiling:
         - cross-python_{{ target_platform }}  # [build_platform != target_platform]
         - numpy                               # [build_platform != target_platform]
