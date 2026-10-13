@@ -37,7 +37,7 @@ requirements:
     - swig {{ swig_version }}.*
   host:
     - cfitsio
-    - fftw * nompi*
+    - fftw
     - gsl
     - liblal >={{ lal_version }}
     - liblalframe >={{ lalframe_version }}
@@ -76,10 +76,6 @@ outputs:
     script: install-lib.sh
     build:
       error_overlinking: true
-      ignore_run_exports:
-        # run_exports parsing for fftw is broken, so we ignore it
-        # manually, for now
-        - fftw
       run_exports:
         - {{ pin_subpackage("liblalpulsar", max_pin="x") }}
     requirements:
@@ -92,7 +88,7 @@ outputs:
         - swig {{ swig_version }}.*
       host:
         - cfitsio
-        - fftw * nompi*
+        - fftw
         - gsl
         - {{ pin_subpackage('lalpulsar-data', exact=True) }}
         - liblal >={{ lal_version }}
