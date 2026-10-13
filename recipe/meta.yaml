@@ -18,10 +18,13 @@ package:
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
   sha256: 2d2145a49add4bd2260dd5b5ab90f7907c7158b943dff62075b9d50074d4c3e1
+  patches:
+    # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2517
+    - 0001-lalpulsar-bin-HWInjection-hwinject.c-check-errno-onl.patch
 
 build:
   error_overlinking: true
-  number: 3
+  number: 4
   skip: true  # [win]
 
 requirements:
@@ -37,7 +40,7 @@ requirements:
     - swig {{ swig_version }}.*
   host:
     - cfitsio
-    - fftw * nompi*
+    - fftw
     - gsl
     - liblal >={{ lal_version }}
     - liblalframe >={{ lalframe_version }}
@@ -76,10 +79,6 @@ outputs:
     script: install-lib.sh
     build:
       error_overlinking: true
-      ignore_run_exports:
-        # run_exports parsing for fftw is broken, so we ignore it
-        # manually, for now
-        - fftw
       run_exports:
         - {{ pin_subpackage("liblalpulsar", max_pin="x") }}
     requirements:
@@ -92,7 +91,7 @@ outputs:
         - swig {{ swig_version }}.*
       host:
         - cfitsio
-        - fftw * nompi*
+        - fftw
         - gsl
         - {{ pin_subpackage('lalpulsar-data', exact=True) }}
         - liblal >={{ lal_version }}
