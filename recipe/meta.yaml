@@ -1,5 +1,5 @@
 {% set name = "lalpulsar" %}
-{% set version = "7.1.1" %}
+{% set version = "8.0.0" %}
 
 # dependencies
 {% set lal_version = "7.6.0" %}
@@ -17,14 +17,14 @@ package:
 
 source:
   url: https://software.igwn.org/sources/source/lalsuite/{{ name }}-{{ version }}.tar.xz
-  sha256: 2d2145a49add4bd2260dd5b5ab90f7907c7158b943dff62075b9d50074d4c3e1
+  sha256: 4b5f7d219d59b8e7695aa0c3cc4c59a660eb539a755f49f62afc2ffb4b0bb383
   patches:
     # backport https://git.ligo.org/lscsoft/lalsuite/-/merge_requests/2517
     - 0001-lalpulsar-bin-HWInjection-hwinject.c-check-errno-onl.patch
 
 build:
   error_overlinking: true
-  number: 4
+  number: 0
   skip: true  # [win]
 
 requirements:
