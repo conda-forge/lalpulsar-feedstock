@@ -1,0 +1,315 @@
+schema_version: 1
+
+context:
+  version: "8.0.0"
+
+  # dependencies
+  lal_version: 8.0.0
+  lalframe_version: 3.1.0
+  lalinference_version: 5.0.0
+  lalsimulation_version: 7.0.0
+
+  # LAL requires downstream packages to be built with the same version of SWIG,
+  # so we need to pin it here
+  swig_version: 4.4.1
+
+recipe:
+  name: lalpulsar-split
+  version: ${{ version }}
+
+source:
+  - url: https://software.igwn.org/sources/source/lalsuite/lalpulsar-${{ version }}.tar.xz
+    sha256: 4b5f7d219d59b8e7695aa0c3cc4c59a660eb539a755f49f62afc2ffb4b0bb383
+
+build:
+  number: 0
+  skip:
+    - win
+
+outputs:
+
+  # -- Staging -----------------------
+
+  - staging:
+      name: lalpulsar-c-build
+    build:
+      script: build
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - help2man >=1.37
+        - make
+        - pkg-config >=0.18.0
+        - python >=3.6
+        - swig ${{ swig_version }}.*
+      host:
+        - cfitsio
+        - fftw
+        - gsl
+        - liblal >=${{ lal_version }}
+        - liblalframe >=${{ lalframe_version }}
+        - liblalinference >=${{ lalinference_version }}
+        - liblalsimulation >=${{ lalsimulation_version }}
+        - if: linux
+          then: libgomp
+          else: llvm-openmp
+        # extras for `make check` (when not cross-compiling)
+        - if: build_platform == target_platform
+          then:
+            - bc
+            - lalframe >=${{ lalframe_version }}
+
+  # -- Packages ----------------------
+
+  - package:
+      name: lalpulsar-data
+    inherit:
+      from: lalpulsar-c-build
+      run_exports: false
+    build:
+      files:
+        - etc/conda/activate.d/activate-lalpulsar-data.*
+        - etc/conda/deactivate.d/deactivate-lalpulsar-data.*
+        - share/lalpulsar/
+    requirements:
+      run_constraints:
+        - liblalpulsar >=4.0.0
+    tests:
+      - package_contents:
+          files:
+            - share/lalpulsar/sun00-40-DE405.dat.gz
+      - script:
+          # check that the activate script sets the data path
+          - test -f ${LALPULSAR_DATADIR}/sun00-40-DE405.dat.gz
+    about:
+      summary: LSC Algorithm Pulsar Library data files
+      description: |
+        The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+        This package contains the data files needed to run various applications
+        and routines that use the LAL Pulsar library.
+
+  - package:
+      name: liblalpulsar
+    inherit: lalpulsar-c-build
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - include/lal/
+        - lib/liblalpulsar*
+        - lib/pkgconfig/lalpulsar*.pc
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+      run:
+        - ${{ pin_subpackage("lalpulsar-data", exact=True) }}
+      run_exports:
+        - ${{ pin_subpackage("liblalpulsar", upper_bound="x") }}
+      run_constraints:
+        - lalpulsar >=3.0.0
+        - python-lalpulsar >=3.0.0
+    tests:
+      - package_contents:
+          lib:
+            - lalpulsar
+      - requirements:
+          run:
+            - pkg-config
+        script:
+          - pkg-config --print-errors --exact-version "${PKG_VERSION}" lalpulsar
+    about:
+      summary: LSC Algorithm Pulsar Library shared object libraries
+      description: |
+        The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+        This package contains the shared-object libraries needed to run
+        applications that use the LAL Pulsar library.
+
+  - package:
+      name: python-lalpulsar
+    inherit:
+      from: lalpulsar-c-build
+      run_exports: false
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - lib/python*/site-packages/
+      script: build-python
+      variant:
+        # use the same keys as liblalpulsar so that we ensure a unique
+        # python-lalpulsar build string for each unique liblalpulsar build
+        use_keys:
+          - cfitsio
+          - fftw
+          - gsl
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - make
+        - pkg-config >=0.18.0
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - ${{ pin_subpackage("liblalpulsar", exact=True) }}
+        - numpy
+        - python
+      run:
+        - ${{ pin_subpackage("liblalpulsar", exact=True) }}
+        - astropy-base
+        - numpy
+        - python
+        - python-lal >=${{ lal_version }}
+        - python-lalframe >=${{ lalframe_version }}
+        - python-lalinference >=${{ lalinference_version }}
+        - python-lalsimulation >=${{ lalsimulation_version }}
+    tests:
+      - python:
+          imports:
+            - lalpulsar
+            - lalpulsar.NstarTools
+            - lalpulsar.PulsarParametersWrapper
+            - lalpulsar.knope_utils
+            - lalpulsar.pulsarhtmlutils
+            - lalpulsar.pulsarpputils
+            - lalpulsar.simulateCW
+          pip_check: false
+      - requirements:
+          run:
+            - pytest >=4.0
+        files:
+          source:
+            - test/python/
+            - lib/*.dat.gz
+        script:
+          - LAL_TEST_PKGDATADIR="./lib" python -m pytest -ra -v test/python
+    about:
+      summary: LSC Algorithm Pulsar Library Python bindings
+      description: |
+        The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+        This package contains the Python bindings of the LALPulsar C libraries
+        and additional Python modules.
+
+        Note: this package only provides the importable Python libraries.
+        All command-line interfaces, scripts, and executables are
+        part of the `lalpulsar` package.
+
+  - package:
+      name: lalpulsar
+    inherit:
+      from: lalpulsar-c-build
+      run_exports: false
+    build:
+      dynamic_linking:
+        overdepending_behavior: error
+      files:
+        - bin/
+        - etc/lalpulsar-user-env.*
+        - share/man/
+      script: build-bin
+      variant:
+        # use the same keys as liblalpulsar so that we ensure a unique
+        # lalpulsar build string for each unique liblalpulsar build
+        use_keys:
+          - cfitsio
+          - fftw
+          - gsl
+    requirements:
+      build:
+        - ${{ compiler('c') }}
+        - ${{ stdlib('c') }}
+        - help2man >=1.37
+        - make
+        - pkg-config >=0.18.0
+        - rsync
+        - sed
+        - swig ${{ swig_version }}.*
+        - if: build_platform != target_platform
+          then:
+            - cross-python_${{ target_platform }}
+            - numpy
+            - python
+      host:
+        - ${{ pin_subpackage("liblalpulsar", exact=True) }}
+        - ${{ pin_subpackage("python-lalpulsar", exact=True) }}
+        - cfitsio
+        - fftw
+        - gsl
+        - liblal >=${{ lal_version }}
+        - liblalframe >=${{ lalframe_version }}
+        - liblalinference >=${{ lalinference_version }}
+        - liblalsimulation >=${{ lalsimulation_version }}
+        # needed by ./configure
+        - numpy
+        - python
+        # extras for `make check` (when not cross-compiling)
+        - if: build_platform == target_platform
+          then:
+            - astropy-base
+            - bc
+            - h5py
+            - jplephem
+            - lalframe >=${{ lalframe_version }}
+            - lalinference >=${{ lalinference_version }}
+            - pytest
+            - scipy
+      run:
+        - ${{ pin_subpackage("liblalpulsar", exact=True) }}
+        - ${{ pin_subpackage("python-lalpulsar", exact=True) }}
+        - astropy-base
+        - jplephem
+        - lalinference >=${{ lalinference_version }}
+        - numpy
+        - python
+    tests:
+      - python:
+          imports:
+            - lalpulsar
+          pip_check: false
+      - script:
+          # assert that the manuals don't just contain errors
+          - grep -q ModuleNotFoundError ${PREFIX}/share/man/man1/lalpulsar_*.1 && exit 1
+          # check executables
+          - lalpulsar_create_time_correction_ephemeris --help
+          - lalpulsar_fits_header_getval --help
+          - lalpulsar_fits_header_list --help
+          - lalpulsar_fits_overview --help
+          - lalpulsar_fits_table_list --help
+          - lalpulsar_heterodyne --help
+          - lalpulsar_knope --help
+          - lalpulsar_knope_collate_results --help
+          # lalpulsar_knope_result_page --help  <- needs scotchcorner
+          - lalpulsar_frequency_evolution --help
+          - lalpulsar_parameter_estimation_nested --help
+          - lalpulsar_splitSFTs --help
+          - test "$(lalpulsar_ssbtodetector --gps 1000000000 --ra 0 --dec 0 --telescope JBO)" == "999999506.306100250"
+          - lalpulsar_version --verbose
+          # the user environment script rewrites PATH, so check that it still works
+          - bash -c '. "${PREFIX}/etc/lalpulsar-user-env.sh" && lalpulsar_version'
+    about:
+      summary: LSC Algorithm Pulsar Library
+      description: |
+        The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+        This package contains the runtime tools.
+
+about:
+  summary: LSC Algorithm Pulsar Library
+  description: |
+    The LSC Algorithm Pulsar Library for gravitational wave data analysis.
+  homepage: https://wiki.ligo.org/Computing/LALSuite
+  documentation: https://lscsoft.docs.ligo.org/lalsuite/lalpulsar/
+  repository: https://git.ligo.org/lscsoft/lalsuite/
+  license: GPL-2.0-or-later
+  license_file: COPYING
+
+extra:
+  feedstock-name: lalpulsar
+  recipe-maintainers:
+    - duncanmmacleod
+    - skymoo
