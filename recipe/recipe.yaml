@@ -20,9 +20,11 @@ recipe:
 source:
   - url: https://software.igwn.org/sources/source/lalsuite/lalpulsar-${{ version }}.tar.xz
     sha256: 8aeb855f0b62bc04e9ebc8494787d753abd2adfce2ddc25a56a1a71c05cbd518
+    patches:
+      - 0001-fix-lalpulsar-patch-bugs-in-conda-activate-scripts.patch
 
 build:
-  number: 0
+  number: 1
   skip:
     - win
 
