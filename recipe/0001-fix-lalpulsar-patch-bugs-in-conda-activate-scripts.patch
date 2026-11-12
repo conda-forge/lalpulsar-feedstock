@@ -1,0 +1,40 @@
+From 156013cb252348bb9cfa38425d10415ec6d4f063 Mon Sep 17 00:00:00 2001
+From: Duncan Macleod <macleoddm@cardiff.ac.uk>
+Date: Thu, 12 Nov 2026 14:16:25 +0000
+Subject: [PATCH] fix(lalpulsar): patch bugs in conda activate scripts
+
+To allow them to work in stricter shell configurations
+---
+ lalpulsar/conda/deactivate-lalpulsar-data.csh | 2 +-
+ lalpulsar/conda/deactivate-lalpulsar-data.sh  | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/lalpulsar/conda/deactivate-lalpulsar-data.csh b/lalpulsar/conda/deactivate-lalpulsar-data.csh
+index 6e84399d1c..ed306a7a08 100644
+--- a/lalpulsar/conda/deactivate-lalpulsar-data.csh
++++ b/lalpulsar/conda/deactivate-lalpulsar-data.csh
+@@ -3,7 +3,7 @@
+ # Deconfigure a conda environment for LALPulsar
+ #
+ 
+-if ($?LALPULSAR_DATADIR) then
++if ($?CONDA_BACKUP_LALPULSAR_DATADIR) then
+ 	setenv LALPULSAR_DATADIR "$CONDA_BACKUP_LALPULSAR_DATADIR"
+ 	unsetenv CONDA_BACKUP_LALPULSAR_DATADIR
+ else
+diff --git a/lalpulsar/conda/deactivate-lalpulsar-data.sh b/lalpulsar/conda/deactivate-lalpulsar-data.sh
+index c063cc620a..a5da7fb0a3 100644
+--- a/lalpulsar/conda/deactivate-lalpulsar-data.sh
++++ b/lalpulsar/conda/deactivate-lalpulsar-data.sh
+@@ -4,7 +4,7 @@
+ #
+ 
+ # restore from backup
+-if [ ! -z "${CONDA_BACKUP_LALPULSAR_DATADIR}" ]; then
++if [ -n "${CONDA_BACKUP_LALPULSAR_DATADIR+x}" ]; then
+ 	export LALPULSAR_DATADIR="${CONDA_BACKUP_LALPULSAR_DATADIR}"
+ 	unset CONDA_BACKUP_LALPULSAR_DATADIR
+ # no backup, just unset
+-- 
+2.47.3
+
